@@ -48,7 +48,7 @@ router.route("/updateProfile").put(isAuthenticated, updateProfile);
 // UpdateProfilePicture
 router
   .route("/updateProfilePicture")
-  .put(isAuthenticated,singleUpload,signUpload, updateProfilePicture);
+  .put(isAuthenticated,singleUpload, updateProfilePicture);
 
 // ForgetPassword
 router.route("/forgotPassword").post(forgotPassword);
