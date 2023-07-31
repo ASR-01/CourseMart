@@ -12,7 +12,7 @@ import {
   authorizeSubscriber,
   isAuthenticated,
 } from "../Middleware/auth.js";
-import {signUpload, singleUpload} from "../Middleware/multer.js";
+import signUpload from "../Middleware/multer.js";
 
 const router = express.Router();
 
@@ -23,13 +23,13 @@ router.route("/courses").get(getAllCourses);
 // Create  new courses only -admin Only
 router
   .route("/createCourse")
-  .post(isAuthenticated, authorizeAdmin, signUpload,signUpload, createCourses);
+  .post(isAuthenticated, authorizeAdmin, signUpload, createCourses);
 
 // Add Lecture ,Delete course ,Get Course Details
 router
   .route("/course/:id")
   .get(isAuthenticated, authorizeSubscriber, getCourseLectures)
-  .post(isAuthenticated, authorizeAdmin,singleUpload, signUpload, addLecture)
+  .post(isAuthenticated, authorizeAdmin, signUpload, addLecture)
   .delete(isAuthenticated, authorizeAdmin, courseDelete);
 
 // Delete Lecture
