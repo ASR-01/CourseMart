@@ -18,13 +18,13 @@ import {
 } from "../controllers/userController.js";
 import { authorizeAdmin, isAuthenticated } from "../Middleware/auth.js";
 
-import signUpload from "../Middleware/multer.js";
+import {signUpload, singleUpload} from "../Middleware/multer.js";
 
 
 const router = express.Router();
 
 // To register a new User
-router.route("/register").post(signUpload,register);
+router.route("/register").post(singleUpload,signUpload,register);
 
 // Login
 router.route("/login").post(login);
@@ -48,7 +48,7 @@ router.route("/updateProfile").put(isAuthenticated, updateProfile);
 // UpdateProfilePicture
 router
   .route("/updateProfilePicture")
-  .put(isAuthenticated,signUpload, updateProfilePicture);
+  .put(isAuthenticated,singleUpload,signUpload, updateProfilePicture);
 
 // ForgetPassword
 router.route("/forgotPassword").post(forgotPassword);
