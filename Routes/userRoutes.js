@@ -17,13 +17,14 @@ import {
   deleteMyProfile
 } from "../controllers/userController.js";
 import { authorizeAdmin, isAuthenticated } from "../Middleware/auth.js";
-import singleUpload from "../Middleware/multer.js";
+
+import signUpload from "../Middleware/multer.js";
 
 
 const router = express.Router();
 
 // To register a new User
-router.route("/register").post(singleUpload,register);
+router.route("/register").post(signUpload,register);
 
 // Login
 router.route("/login").post(login);
