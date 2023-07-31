@@ -9,35 +9,93 @@ import cloudinary from "cloudinary";
 import getDataUri from "../utils/datauri.js";
 import { Stats } from "../Modals/stats.js";
 // User Register
+
+
+
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
-
-  if (!name || !email || !password) {
-    return next(new ErrorHandler("Please Enter All Field", 400));
-  }
-  let user = await User.findOne({ email });
-  if (user) {
-    return next(new ErrorHandler("User Already Exit", 409));
-  }
-  //    Upload file on Cloudnary
   const file = req.file;
 
-  const fileUri = getDataUri(file);
+  if (!name || !email || !password || !file)
+    return next(new ErrorHandler("Please enter all field", 400));
 
-  const myCloud = await cloudinary.v2.uploader.upload(fileUri.content);
+  let user = await User.findOne({ email });
+
+  if (user) return next(new ErrorHandler("User Already Exist", 409));
+
+  const fileUri = getDataUri(file);
+  const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
 
   user = await User.create({
     name,
     email,
     password,
     avatar: {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
+      public_id: mycloud.public_id,
+      url: mycloud.secure_url,
     },
   });
 
   sendToken(res, user, "Registered Successfully", 201);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export const register = catchAsyncError(async (req, res, next) => {
+//   const { name, email, password } = req.body;
+
+//   if (!name || !email || !password) {
+//     return next(new ErrorHandler("Please Enter All Field", 400));
+//   }
+//   let user = await User.findOne({ email });
+//   if (user) {
+//     return next(new ErrorHandler("User Already Exit", 409));
+//   }
+//   //    Upload file on Cloudnary
+//   const file = req.file;
+
+//   const fileUri = getDataUri(file);
+
+//   const myCloud = await cloudinary.v2.uploader.upload(fileUri.content);
+
+//   user = await User.create({
+//     name,
+//     email,
+//     password,
+//     avatar: {
+//       public_id: myCloud.public_id,
+//       url: myCloud.secure_url,
+//     },
+//   });
+
+//   sendToken(res, user, "Registered Successfully", 201);
+// });
 
 // User Login
 export const login = catchAsyncError(async (req, res, next) => {
