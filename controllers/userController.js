@@ -10,13 +10,11 @@ import getDataUri from "../utils/datauri.js";
 import { Stats } from "../Modals/stats.js";
 // User Register
 
-
-
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
   const file = req.file;
 
-  if (!name || !email || !password || !file)
+  if (!name || !email || !password )
     return next(new ErrorHandler("Please enter all field", 400));
 
   let user = await User.findOne({ email });
@@ -38,64 +36,6 @@ export const register = catchAsyncError(async (req, res, next) => {
 
   sendToken(res, user, "Registered Successfully", 201);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const register = catchAsyncError(async (req, res, next) => {
-//   const { name, email, password } = req.body;
-
-//   if (!name || !email || !password) {
-//     return next(new ErrorHandler("Please Enter All Field", 400));
-//   }
-//   let user = await User.findOne({ email });
-//   if (user) {
-//     return next(new ErrorHandler("User Already Exit", 409));
-//   }
-//   //    Upload file on Cloudnary
-//   const file = req.file;
-
-//   const fileUri = getDataUri(file);
-
-//   const myCloud = await cloudinary.v2.uploader.upload(fileUri.content);
-
-//   user = await User.create({
-//     name,
-//     email,
-//     password,
-//     avatar: {
-//       public_id: myCloud.public_id,
-//       url: myCloud.secure_url,
-//     },
-//   });
-
-//   sendToken(res, user, "Registered Successfully", 201);
-// });
 
 // User Login
 export const login = catchAsyncError(async (req, res, next) => {
@@ -125,9 +65,9 @@ export const Logout = catchAsyncError(async (req, res, next) => {
     .status(200)
     .cookie("token", null, {
       expires: new Date(Date.now()),
-      httpOnly:true,
-      secure:true,
-      sameSite:'none',
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
     })
     .json({
       success: true,
@@ -350,7 +290,6 @@ export const updateRoleUserOrAdmin = catchAsyncError(async (req, res, next) => {
   if (user.role === "user") user.role = "admin";
   else user.role === "user";
 
-
   await user.save();
 
   res.status(200).json({
@@ -367,16 +306,14 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
     next(new ErrorHandler("User Not Found", 404));
   }
 
-  await cloudinary.v2.uploader.destroy(user.avatar.public_id)
+  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
 
-// Cancel Subscription
-
-
+  // Cancel Subscription
 
   await user.deleteOne();
 
   res.status(200).json({
-    success: true, 
+    success: true,
     message: "User Deleted SuccessFully",
   });
 });
@@ -385,30 +322,28 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
 export const deleteMyProfile = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
 
-  await cloudinary.v2.uploader.destroy(user.avatar.public_id)
+  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
 
   await user.deleteOne();
 
-  res.status(200).cookie("token",null,{
-    expires : new Date(Date.now())
-  }).json({
-    success: true, 
-    message: "User Deleted SuccessFully",
-  });
+  res
+    .status(200)
+    .cookie("token", null, {
+      expires: new Date(Date.now()),
+    })
+    .json({
+      success: true,
+      message: "User Deleted SuccessFully",
+    });
 });
 
+User.watch().on("change", async () => {
+  const stats = await Stats.find({}).sort({ createdAt: "desc" }).limit(1);
 
+  const subscription = await User.find({ "subscription.status": "active" });
+  stats[0].users = await User.countDocuments();
+  stats[0].subscription = subscription.length;
+  stats[0].createdAt = new Date(Date.now());
 
-
-User.watch().on('change', async()=>{
-
-const stats  = await Stats.find({}).sort({createdAt:'desc'}).limit(1)
-
-const subscription = await User.find({"subscription.status":"active"})
-stats[0].users= await User.countDocuments()
-stats[0].subscription=subscription.length
-stats[0].createdAt = new Date(Date.now())
-
-await stats[0].save()
-
-})
+  await stats[0].save();
+});
