@@ -3,12 +3,5 @@ import multer from "multer";
 const singleUpload =multer({storage}).single("file")
 
 
-// export const signUpload = async () => {
-//     const timestamp = Math.round(newDate() /1000);
-//     const params = {
-//         timestamp: timestamp
-//     };
-//     const signature = await cloudinary.utils.api_sign_request(params, process.env.CLOUDINARY_CLIENT_SECERT);
-//     return { timestamp, signature };
-// }
 export default singleUpload ;
+
