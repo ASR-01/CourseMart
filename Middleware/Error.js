@@ -1,4 +1,3 @@
-// import ErrorHandler from "../utils/customErrorHandler";
 
 
 const ErrorMiddleware = (err, req,res, next) => {
@@ -13,3 +12,4 @@ const ErrorMiddleware = (err, req,res, next) => {
 };
 
 export default ErrorMiddleware;
+
