@@ -50,7 +50,7 @@ export const paymentVerification = catchAsyncError(async (req, res, next) => {
   // Database Comes here
   await Payment.create({
     razorpay_signature,
-    razorpay_order_id,
+    razorpay_subscription_id,
     razorpay_payment_id,
   });
 
