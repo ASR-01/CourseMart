@@ -57,7 +57,7 @@ export const paymentVerification = catchAsyncError(async (req, res, next) => {
   user.subscription.status = "Active";
   await user.save();
   res.redirect(
-    `${process.env.FRONTEND_URL}/paymentSuccessFull?reference=${razorpay_payment_id}`
+    `${process.env.FRONTEND_URL}/paymentSuccess?reference=${razorpay_payment_id}`
   );
 });
 
