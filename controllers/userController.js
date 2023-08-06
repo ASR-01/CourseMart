@@ -269,11 +269,11 @@ export const removeFromPlaylist = catchAsyncError(async (req, res, next) => {
 // Admin Routes
 
 export const getAllUsersAdmin = catchAsyncError(async (req, res, next) => {
-  const user = await User.find({});
+  const users = await User.find({});
 
   res.status(200).json({
     success: true,
-    user,
+    users,
   });
 });
 
@@ -287,7 +287,7 @@ export const updateRoleUserOrAdmin = catchAsyncError(async (req, res, next) => {
   }
 
   if (user.role === "user") user.role = "admin";
-  else user.role === "user";
+  else user.role = "user";
 
   await user.save();
 
