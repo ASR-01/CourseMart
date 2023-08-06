@@ -7,7 +7,6 @@ import Courses from "./components/Courses/Courses";
 import CoursePage from "./components/CoursePage/CoursePage";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
-import ForgotPassword from "./components/Auth/ForgotPassword";
 import ResetPassword from "./components/Auth/ResetPassword";
 import Contact from "./components/Contact/Contact";
 import Request from "./components/Request/Request";
@@ -29,6 +28,7 @@ import { ProtectedRoute } from "protected-route-react";
 import Loader from "./components/layouts/Loader";
 import Sidebar from "./components/Admin/Sidebar";
 import CreateCourse from "./components/Admin/CreateCourse/CreateCourse";
+import ForgetPassword from "./components/Auth/Forgotpassword";
 
 const App = () => {
   //   window.addEventListener("contextmenu" ,(e)=>{
@@ -105,7 +105,7 @@ const App = () => {
                     isAuthenticated={!isAuthenticated}
                     redirect="/profile"
                   >
-                    <ForgotPassword />
+                    <ForgetPassword />
                   </ProtectedRoute>
                 }
               />
