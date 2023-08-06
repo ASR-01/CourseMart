@@ -8,9 +8,11 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { RiCheckboxCircleFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link,useSearchParams } from "react-router-dom";
 
 const PaymentSuccess = () => {
+
+  const search = useSearchParams()[0].get('reference')
   return (
     <>
       <Container h={"90vh"} p={"16"}>
@@ -41,7 +43,7 @@ const PaymentSuccess = () => {
               Go to Profile
             </Button>
           </Link>
-          <Heading size={"xs"} children="Reference : Aditya Rawat" />
+          <Heading size={"xs"} children={`Reference : ${search}`} />
         </VStack>
       </Container>
     </>

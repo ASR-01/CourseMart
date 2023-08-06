@@ -7,11 +7,15 @@ import store from "./redux/store";
 
 const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
-  <React.StrictMode>
+
+
+
+
+  
     <ReduxProvider store={store}>
       <ChakraProvider theme={theme}>
         <App />
       </ChakraProvider>
     </ReduxProvider>
-  </React.StrictMode>
+
 );

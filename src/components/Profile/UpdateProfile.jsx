@@ -1,48 +1,69 @@
 import { Container, Heading, VStack, Input, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { updateProfile } from "../../redux/actions/profile";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUser } from "../../redux/actions/user";
+import { useNavigate } from "react-router-dom";
 
 
-const UpdateProfile = () => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
+const UpdateProfile = ({user}) => {
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
 
-  const updateProfileSubmitHandler = (e) => {
+  const navigate = useNavigate()
+const dispatch = useDispatch()
+  const updateProfileSubmitHandler = async (e) => {
     e.preventDefault();
-  };
-  return (
-    <Container py={"16"} minH={"92vh"} >
-        <form onSubmit={updateProfileSubmitHandler}>
-          <Heading
-      
-            children={"Update Profile"}
-            my={"16"}
-            textAlign={["center", "left"]}
-            textTransform={"uppercase"}
-          />
-          <VStack spacing={"8"} boxShadow={'dark-lg'}>
-            <Input
-              type="text"
-              placeholder="Enter Name"
-              value={name}
-              name="name"
-              focusBorderColor="red.200"
-              onChange={(e) => setName(e.target.value)}
-            />
-             <Input
-              type="email"
-              placeholder="Enter Email"
-              value={email}
-              name="email"
-              focusBorderColor="red.200"
-              onChange={(e) => setEmail(e.target.value)}
-            />
 
-            <Button colorScheme="red" type="submit" w={"full"}>
-              Update
-            </Button>
-          </VStack>
-        </form>
-      </Container>
+  await dispatch(updateProfile(name,email));
+  dispatch(loadUser())
+  navigate('/profile')
+  };
+
+
+  const{loading}=useSelector(state=>state.profile)
+  return (
+    
+    <Container py="16" minH={"90vh"}>
+      <form onSubmit={updateProfileSubmitHandler}>
+        <Heading
+          textTransform={"uppercase"}
+          children="Update Profile"
+          my="16"
+          textAlign={["center", "left"]}
+        />
+
+        <VStack spacing={"8"}>
+          <Input
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+            type={"text"}
+            focusBorderColor="red.500"
+          />
+
+          <Input
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            type={"email"}
+            focusBorderColor="red.500"
+          />
+
+          <Button
+          isLoading={loading}
+            w="full"
+            colorScheme={"red"}
+            type="submit"
+          >
+            Update Profile
+          </Button>
+        </VStack>
+      </form>
+    </Container>
+  
   )
 }
 

@@ -2,8 +2,8 @@ import {
   Box,
   Button,
   Grid,
-  HStack,
   Heading,
+  HStack,
   Table,
   TableCaption,
   TableContainer,
@@ -12,45 +12,65 @@ import {
   Th,
   Thead,
   Tr,
-} from "@chakra-ui/react";
-import React from "react";
-import SideBar from "../SideBar";
-import { RiDeleteBin4Fill } from "react-icons/ri";
+} from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { RiDeleteBin7Fill } from 'react-icons/ri';
+import Sidebar from '../Sidebar';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  deleteUser,
+  getAllUsers,
+  updateUserRole,
+} from '../../../redux/actions/admin';
+import toast from 'react-hot-toast';
 
 const Users = () => {
-  const users = [
-    {
-      _id: " 1",
-      name: "Adi",
-      email: "Asr@123",
-      role: "admin",
-      subscription: {
-        status: "active",
-      },
-    },
-  ];
+  const { users, loading, error, message } = useSelector(state => state.admin);
 
-  const updateHandler = (userId) => {
-    console.log(userId);
+  const dispatch = useDispatch();
+
+  const updateHandler = userId => {
+    dispatch(updateUserRole(userId));
   };
-  const deleteUserHandler = (userId) => {
-    console.log(userId);
+  const deleteButtonHandler = userId => {
+    dispatch(deleteUser(userId));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearError' });
+    }
+
+    if (message) {
+      toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+
+    dispatch(getAllUsers());
+  }, [dispatch, error, message]);
+
   return (
-    <Grid minH={"100vh"} templateColumns={["1fr", "5fr 1fr"]}>
-      <Box  p={['0','16']} overflow={'auto'}>
+    <Grid
+    
+      minH={'100vh'}
+      templateColumns={['1fr', '5fr 1fr']}
+    >
+      <Box p={['0', '16']} overflowX="auto">
         <Heading
+          textTransform={'uppercase'}
           children="All Users"
-          textTransform={"uppercase"}
-          my={"16"}
-          textAlign={["center", "left"]}
+          my="16"
+          textAlign={['center', 'left']}
         />
-        <TableContainer w={["100vw", "full"]}>
-          <Table variant={"simple"} size={"lg"}>
-            <TableCaption>All Available Users In the Database</TableCaption>
+
+        <TableContainer w={['100vw', 'full']}>
+          <Table variant={'simple'} size="lg">
+            <TableCaption>All available users in the database</TableCaption>
+
             <Thead>
               <Tr>
-                <Th>ID</Th>
+                <Th>Id</Th>
                 <Th>Name</Th>
                 <Th>Email</Th>
                 <Th>Role</Th>
@@ -58,58 +78,60 @@ const Users = () => {
                 <Th isNumeric>Action</Th>
               </Tr>
             </Thead>
+
             <Tbody>
-              {users.map((item) => {
-                return (
-                  <>
-                    <Row
-                      key={item._id}
-                      item={item}
-                      deleteUserHandler={deleteUserHandler}
-                      updateHandler={updateHandler}
-                    />
-                  </>
-                );
-              })}
+              {users &&
+                users.map(item => (
+                  <Row
+                    updateHandler={updateHandler}
+                    deleteButtonHandler={deleteButtonHandler}
+                    key={item._id}
+                    item={item}
+                    loading={loading}
+                  />
+                ))}
             </Tbody>
           </Table>
         </TableContainer>
       </Box>
 
-      <SideBar />
+      <Sidebar />
     </Grid>
   );
 };
 
 export default Users;
 
-function Row({ item, updateHandler, deleteUserHandler }) {
+function Row({ item, updateHandler, deleteButtonHandler, loading }) {
   return (
     <Tr>
-      <Td>{item._id}</Td>
+      <Td>#{item._id}</Td>
       <Td>{item.name}</Td>
-
-      <Td> {item.email}</Td>
-      <Td> {item.role}</Td>
-
-      <Td>{item.subscription.status === "active" ? "Active" : "Not Active"}</Td>
+      <Td>{item.email}</Td>
+      <Td>{item.role}</Td>
+      <Td>
+        {item.subscription && item.subscription.status === 'active'
+          ? 'Active'
+          : 'Not Active'}
+      </Td>
 
       <Td isNumeric>
-        <HStack justifyContent={"flex-end"}>
+        <HStack justifyContent={'flex-end'}>
           <Button
             onClick={() => updateHandler(item._id)}
-            variant={"outline"}
+            variant={'outline'}
             color="red.500"
+            isLoading={loading}
           >
             Change Role
           </Button>
 
           <Button
-            variant={"outline"}
-            color="red.600"
-            onClick={() => deleteUserHandler(item._id)}
+            onClick={() => deleteButtonHandler(item._id)}
+            color={'red.600'}
+            isLoading={loading}
           >
-            <RiDeleteBin4Fill />
+            <RiDeleteBin7Fill />
           </Button>
         </HStack>
       </Td>

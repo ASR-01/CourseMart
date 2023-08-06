@@ -37,7 +37,7 @@ const Header = ({ isAuthenticated = false, user }) => {
   //  For Logout
   const logoutHandler = () => {
 
-    
+
     onClose();
 
     dispatch(logout())

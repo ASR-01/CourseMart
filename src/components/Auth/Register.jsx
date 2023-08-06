@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import img4 from "../../assets/images/study4.png";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/actions/user";
+import axios from "axios";
 
 export const fileUploadCss = {
   cursor: "pointer",
@@ -37,32 +38,30 @@ const Register = () => {
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState("");
 
- 
-const dispatch = useDispatch()
-  const handleRegisterSubmit = (e)=>{
-    e.preventDefault()
-
-    const myForm = new FormData()
-    myForm.append('name',name)
-    myForm.append('email',email)
-    myForm.append('password',password)
-    myForm.append('file',image)
-
-    dispatch(register(myForm))
-
-
-  }
-
-
-
-  const ChangeFileHandler = (e) => {
+  
+  const dispatch = useDispatch();
+  const changeImageHandler = e => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+
+    if (file) {reader.readAsDataURL(file);}
+
     reader.onloadend = () => {
       setImagePreview(reader.result);
       setImage(file);
     };
+  };
+
+  const submitHandler = e => {
+    e.preventDefault();
+    const myForm = new FormData();
+
+    myForm.append('name', name);
+    myForm.append('email', email);
+    myForm.append('password', password);
+    myForm.append('file', image);
+
+    dispatch(register(myForm));
   };
   return (
     <>
@@ -78,7 +77,7 @@ const dispatch = useDispatch()
             fontFamily={"body"}
           />
 
-          <form style={{ width: "100%" }} onSubmit={handleRegisterSubmit}>
+          <form style={{ width: "100%" }} onSubmit={submitHandler}>
             <Box my={"1"} display={"flex"} justifyContent={"center"}>
               <Avatar size={"xl"} src={imagePreview} />
             </Box>
@@ -87,7 +86,7 @@ const dispatch = useDispatch()
               <FormLabel htmlFor="name" children={"Name"} />
 
               <Input
-                type='text'
+                type="text"
                 placeholder="enter name .."
                 value={name}
                 name="name"
@@ -128,12 +127,13 @@ const dispatch = useDispatch()
               <FormLabel htmlFor="ChooseAvatar" children={"Choose Avatar"} />
 
               <Input
-                accept="/*"
-                type="file"
+          
+                accept="image/*"
+                type={'file'}
                 id="Choose Avatar"
                 focusBorderColor="red.200"
                 css={fileUploadStyle}
-                onChange={ChangeFileHandler}
+                onChange={changeImageHandler}
               />
             </Box>
 

@@ -1,8 +1,19 @@
+import { Spinner, VStack } from '@chakra-ui/react'
+import { color } from 'framer-motion'
 import React from 'react'
 
-const Loader = () => {
+const Loader = ({ color = "red.200" }) => {
   return (
-    <div>Loader</div>
+    <>
+      <VStack h={'100vh'} justifyContent={'center'}>
+        <div style={{transform:"scale(4)"}}>
+          <Spinner thickness='2px' speed='0.65s' emptyColor='transparent' color={color} size={'xl'} />
+        </div>
+      </VStack>
+
+
+
+    </>
   )
 }
 
