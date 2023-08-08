@@ -17,7 +17,7 @@ import { fileUploadCss } from '../../Auth/Register';
 import Sidebar from '../Sidebar';
 import toast from 'react-hot-toast';
 
-const CreateCourse = () => {
+const CreateCourseAdmin = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [createdBy, setCreatedBy] = useState('');
@@ -155,4 +155,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default CreateCourseAdmin;

@@ -24,7 +24,7 @@ import {
 } from '../../../redux/actions/admin';
 import toast from 'react-hot-toast';
 
-const Users = () => {
+const UsersAdmin = () => {
   const { users, loading, error, message } = useSelector(state => state.admin);
 
   const dispatch = useDispatch();
@@ -100,7 +100,7 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default UsersAdmin;
 
 function Row({ item, updateHandler, deleteButtonHandler, loading }) {
   return (

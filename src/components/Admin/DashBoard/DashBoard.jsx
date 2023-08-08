@@ -9,11 +9,11 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { RiArrowDownLine, RiArrowUpLine } from 'react-icons/ri';
-import Sidebar from '../Sidebar';
 import { DoughnutChart, LineChart } from '../Dashboard/Chart';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDashboardStats } from '../../../redux/actions/admin';
 import Loader from '../../layouts/Loader';
+import SidebarAdmin from '../Sidebar';
 
 const Databox = ({ title, qty, qtyPercentage, profit }) => (
   <Box
@@ -182,7 +182,7 @@ const DashboardAdmin = () => {
         </Box>
       )}
 
-      <Sidebar />
+      <SidebarAdmin />
     </Grid>
   );
 };

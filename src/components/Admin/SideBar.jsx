@@ -8,7 +8,7 @@ import {
 } from 'react-icons/ri';
 import { Link, useLocation } from 'react-router-dom';
 
-const Sidebar = () => {
+const SidebarAdmin = () => {
   const location = useLocation();
   return (
     <VStack spacing={'8'} p="16" boxShadow={'-2px 0 10px rgba(107,70,193,0.5)'}>
@@ -40,7 +40,7 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarAdmin;
 
 function LinkButton({ url, Icon, text, active }) {
   return (

@@ -19,16 +19,16 @@ import Profile from "./components/Profile/Profile";
 import ChangePassword from "./components/Profile/ChangePassword";
 import UpdateProfile from "./components/Profile/UpdateProfile";
 import AdminCourses from './components/Admin/AdminCourses/AdminCourses'
-import { Users } from "./components/Admin/Users/Users";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { getMyProfile } from "./redux/actions/user";
 import { ProtectedRoute } from "protected-route-react";
 import Loader from "./components/layouts/Loader";
-import { CreateCourse } from "./components/Admin/CreateCourse/CreateCourse";
 import ForgetPassword from "./components/Auth/Forgotpassword";
-import Sidebar from "./components/Admin/Sidebar";
 import DashboardAdmin from "./components/Admin/Dashboard/Dashboard";
+import CreateCourseAdmin from "./components/Admin/CreateCourse/CreateCourse";
+import SidebarAdmin from "./components/Admin/Sidebar";
+import UsersAdmin from "./components/Admin/Users/Users";
 
 const App = () => {
   //   window.addEventListener("contextmenu" ,(e)=>{
@@ -183,7 +183,7 @@ const App = () => {
                     admin={true}
                     isAdmin={user && user.role === "admin"}
                   >
-                    <CreateCourse />
+                    <CreateCourseAdmin />
                   </ProtectedRoute>
                 }
               />
@@ -207,11 +207,11 @@ const App = () => {
                     admin={true}
                     isAdmin={user && user.role === "admin"}
                   >
-                    <Users />
+                    <UsersAdmin />
                   </ProtectedRoute>
                 }
               />
-              <Route path={"/sideBar"} element={<Sidebar />} />
+              <Route path={"/sideBar"} element={<SidebarAdmin />} />
             </Routes>
             <Footer />
             <Toaster />
