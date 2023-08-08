@@ -5,7 +5,7 @@ import { forgetPassword } from "../../redux/actions/user";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-const ForgotPassword = () => {
+const ForgetPassword = () => {
   const [email, setEmail] = useState("");
 
 
@@ -61,4 +61,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgetPassword;
