@@ -18,17 +18,17 @@ import Subscribe from "./components/Payments/Subscribe";
 import Profile from "./components/Profile/Profile";
 import ChangePassword from "./components/Profile/ChangePassword";
 import UpdateProfile from "./components/Profile/UpdateProfile";
-import DashBoard from "./components/Admin/Dashboard/Dashboard";
-import AdminCourses from "./components/Admin/AdminCourses/AdminCourses";
-import Users from "./components/Admin/Users/Users";
+import DashBoard from './components/Admin/Dashboard/Dashboard'
+import AdminCourses from './components/Admin/AdminCourses/AdminCourses'
+import { Users } from "./components/Admin/Users/Users";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { getMyProfile } from "./redux/actions/user";
 import { ProtectedRoute } from "protected-route-react";
 import Loader from "./components/layouts/Loader";
-import Sidebar from "./components/Admin/Sidebar";
-import CreateCourse from "./components/Admin/CreateCourse/CreateCourse";
+import { CreateCourse } from "./components/Admin/CreateCourse/CreateCourse";
 import ForgetPassword from "./components/Auth/Forgotpassword";
+import Sidebar from "./components/Admin/Sidebar";
 
 const App = () => {
   //   window.addEventListener("contextmenu" ,(e)=>{
