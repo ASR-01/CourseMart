@@ -53,7 +53,7 @@ const Bar = ({ title, value, profit }) => (
   </Box>
 );
 
-const Dashboard = () => {
+const DashboardAdmin = () => {
   const dispatch = useDispatch();
 
   const {
@@ -187,4 +187,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardAdmin;

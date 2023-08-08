@@ -18,7 +18,6 @@ import Subscribe from "./components/Payments/Subscribe";
 import Profile from "./components/Profile/Profile";
 import ChangePassword from "./components/Profile/ChangePassword";
 import UpdateProfile from "./components/Profile/UpdateProfile";
-import DashBoard from './components/Admin/Dashboard/Dashboard'
 import AdminCourses from './components/Admin/AdminCourses/AdminCourses'
 import { Users } from "./components/Admin/Users/Users";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +28,7 @@ import Loader from "./components/layouts/Loader";
 import { CreateCourse } from "./components/Admin/CreateCourse/CreateCourse";
 import ForgetPassword from "./components/Auth/Forgotpassword";
 import Sidebar from "./components/Admin/Sidebar";
+import DashboardAdmin from "./components/Admin/Dashboard/Dashboard";
 
 const App = () => {
   //   window.addEventListener("contextmenu" ,(e)=>{
@@ -171,7 +171,7 @@ const App = () => {
                     admin={true}
                     isAdmin={user && user.role === "admin"}
                   >
-                    <DashBoard />
+                    <DashboardAdmin />
                   </ProtectedRoute>
                 }
               />
